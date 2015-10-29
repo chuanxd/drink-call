@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="zh-TW">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Drink Call Training</title>
+		<meta property="og:url" content="http://hotaru.ohyayaya.com/drinkcall.html">
+		<meta property="og:title" content="Starbucks Drink Call Training">
+		<meta property="og:image" content="http://hotaru.ohyayaya.com/img/464038_154627164718441_1697932729_o.jpg">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style>
+			body{background: url(http://newsxd.ohyayaya.com/img/kindajean.png) fixed;}
+			#result ,#ok{margin-top: 20px;}
+			#drinking ,#ans{font-family: "PT Mono",Courier,"微軟正黑體","Microsoft JhengHei";}
+			#ok{color: green;}
+			#no{color: red;}
+			#footer{background: rgba(255, 255, 255, 0.3);}
+		</style>
+		<!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+	</head>
+	<body>
+		<div class="container">
+			<h1>Drink Call Training</h1>
+			<h2 id="drinking"></h2>
+			<div class="row">
+				<div class="col-lg-4">
+					<label for="code">Enter The Drink Call</label>
+			  	<input id="enter" type="text" class="form-control input-normal" placeholder="Enter Here!">
+				</div>
+			</div>
+			<div id="result">
+				<span id="resultIcon" class=""></span><span id="ans"></span>
+				<strong><p id="ok"></p></strong>
+				<strong><p id="no"></p></strong>
+				<button id="drinkCallList"type="button" class="btn btn-success visible-lg" data-toggle="modal" data-target=".bs-example-modal-sm">Drinks List</button>
+			</div>
+			<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-sm">
+			    <div class="modal-content">
+			    	      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						        <h4 class="modal-title">Drinks List</h4>
+						      </div>
+			      <table id="listTable" class="table table-striped">
+			      	<tr><td>Drinking</td><td>Call</td></tr>
+			      </table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<nav id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		  <div class="container">
+		    <p>@chuanXD</p>
+		  </div>
+		</nav>
+
+
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script>
+			var drinking = {"index":[
+					{"drink":"焦糖瑪奇朵","call":"CM"},
+					{"drink":"那提","call":"L"},
+					{"drink":"香草那提","call":"VL"},
+					{"drink":"榛果那提","call":"HL"},
+					{"drink":"摩卡","call":"M"},
+					{"drink":"卡布奇諾","call":"C"},
+					{"drink":"美式咖啡","call":"A"},
+					{"drink":"濃縮咖啡","call":"E"},
+					{"drink":"濃淬那提","call":"RB"},
+					{"drink":"本日精選","call":"BC"},
+					{"drink":"經典紅茶那提","call":"BLTL"},
+					{"drink":"玫瑰蜜香茶那提","call":"RFTL"},
+					{"drink":"抹茶那提","call":"GRTL"},
+					{"drink":"經典巧克力","call":"SHC"},
+					{"drink":"熱牛奶","call":"SM"},
+					{"drink":"兒童熱可可","call":"KHC"},
+					{"drink":"咖啡星冰樂","call":"CF"},
+					{"drink":"摩卡星冰樂","call":"MF"},
+					{"drink":"濃縮星冰樂","call":"EF"},
+					{"drink":"焦糖星冰樂","call":"CRF"},
+					{"drink":"焦糖可可碎片","call":"CFCCF"},
+					{"drink":"摩卡可可碎片","call":"FCMF"},
+					{"drink":"黑摩卡可可碎片","call":"FCDMF"},
+					{"drink":"香草風味","call":"VCRM"},
+					{"drink":"巧克力","call":"MOCRM"},
+					{"drink":"巧克力可可碎片","call":"MOFCCRM"},
+					{"drink":"抹茶奶霜","call":"GTCRM"},
+					{"drink":"雙果果汁星冰樂","call":"TMFJ"},
+				]
+			};
+			function getRandomInt(min, max) {
+  			return Math.floor(Math.random() * (max - min + 1) + min);
+			}
+			function getDrinking(){
+				randomIndex = getRandomInt(0,27);
+				$("#drinking").text(drinking.index[randomIndex].drink);
+			}
+			$(document).ready(function(){
+				var yesCount = 0;
+				var noCount = 0;
+				getDrinking();
+				$(document).keypress(function(e) {
+					if(e.which == 13){
+						if($("#enter").val() === drinking.index[randomIndex].call){
+							$("#resultIcon").removeClass("glyphicon glyphicon-remove").addClass("glyphicon glyphicon-ok");
+								yesCount++;
+						}else{
+							$("#resultIcon").removeClass("glyphicon glyphicon-ok").addClass("glyphicon glyphicon-remove");
+							noCount++;
+						}
+						$("#ans").text(drinking.index[randomIndex].drink + "=>" + drinking.index[randomIndex].call);
+						$("#enter").val("");
+						getDrinking();
+						$("#ok").text("BINGO  " + yesCount);
+						$("#no").text("WRONG  " + noCount);
+					}
+				});
+				$("#drinkCallList").click(function(){
+					for (var i = 0; i < drinking.index.length; i++) {
+						$("#listTable").append("<tr><td>" + drinking.index[i].drink + "</td><td>" + drinking.index[i].call +"</td></tr>");
+					}
+				});
+			});
+		</script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		  ga('create', 'UA-38568622-8', 'ohyayaya.com');
+		  ga('send', 'pageview');
+		</script>
+	</body>
+</html>
